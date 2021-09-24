@@ -1,0 +1,106 @@
+<div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+  <div class="col-md-5 p-lg-5 mx-auto">
+    <h1 class="display-4 fw-normal">d00ble card generator</h1>
+    <p class="lead fw-normal">select images to generate d00ble cards. use square png images with
+      transparent background for best results.</p>
+  </div>
+  <div class="col-md-5  mx-auto">
+    <button (click)="upload.click()" type="button" title="upload"
+            class="btn btn-dark pull-left mx-1">
+      add images
+    </button>
+    <button (click)="resetImages()" type="button" title="upload"
+            class="btn btn-dark pull-left mx-1">
+      reset images
+    </button>
+    <input #upload type="file" multiple="multiple" class="upload-btn"
+           (change)="onFileChange($event)"/>
+    <button [disabled]="configService.images.length == 0" (click)="render()" type="button"
+            title="upload" class="btn btn-dark pull-left mx-1">
+      generate
+    </button>
+  </div>
+</div>
+
+<div *ngIf="rendering"
+     class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+  <div class="col-md-5 p-lg-5 mx-auto">
+    <h1 *ngIf="cardsRendered == 0" class="display-4 fw-normal">generating cards</h1>
+    <h1 *ngIf="cardsRendered != 0 && cardsRendered != cardService.configService.config.numCards"
+        class="display-4 fw-normal">rendering cards</h1>
+    <h1 *ngIf="cardsRendered == cardService.configService.config.numCards"
+        class="display-4 fw-normal">writing pdf</h1>
+  </div>
+  <div class="col-md-5 p-lg-5 mx-auto">
+    <progressbar [max]="cardService.configService.config.numCards" [value]="cardsRendered"
+                 type="success" [striped]="true" [animate]="true"><i>
+      {{cardsRendered}} / {{cardService.configService.config.numCards}}</i></progressbar>
+  </div>
+</div>
+
+<div *ngIf="!rendering"
+     class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+  <div class="col-md-5 my-2 mx-auto">
+    <h2 class="display-4 fw-normal">images</h2>
+  </div>
+  <div class="col-12 image-wrapper" *ngIf="configService.images.length != 0">
+    <div *ngFor="let image of configService.images">
+      <img class="image" [src]=" image.data">
+    </div>
+  </div>
+  <div class="col-12" *ngIf="configService.images.length == 0">
+    <h5 class="display-4 fw-light">no images selected</h5>
+  </div>
+</div>
+
+<div *ngIf="!rendering"
+     class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
+  <div class="col-md-5 my-2 mx-auto">
+    <h2 class="display-4 fw-normal">settings</h2>
+  </div>
+  <div class="col-md-5 my-2 mx-auto">
+    <label for="customRange2" class="form-label">number of
+      cards: {{configService.config.numCards}}</label>
+    <input type="range" class="form-range" [(ngModel)]="configService.config.numCards"
+           [ngModelOptions]="{standalone: true}" min="1" max="99" id="customRange1">
+  </div>
+  <div class="col-md-5 my-2 mx-auto">
+    <label for="customRange2" class="form-label">max image size variation in
+      %: {{configService.config.maxImageWidth}}</label>
+    <input type="range" class="form-range" [(ngModel)]="configService.config.maxImageWidth"
+           [ngModelOptions]="{standalone: true}" min="1" max="100" id="customRange2">
+  </div>
+  <div class="col-md-5 my-2 mx-auto">
+    <label for="customRange2" class="form-label">min image size variation in
+      %: {{configService.config.minImageWidth}}</label>
+    <input type="range" class="form-range" [(ngModel)]="configService.config.minImageWidth"
+           [ngModelOptions]="{standalone: true}" min="1" max="100" id="customRange3">
+  </div>
+  <div class="col-md-5 my-2 mx-auto">
+    <label for="customRange2" class="form-label">card size
+      %: {{configService.config.cardScaling}}</label>
+    <input type="range" class="form-range" [(ngModel)]="configService.config.cardScaling"
+           [ngModelOptions]="{standalone: true}" min="1" max="100" id="customRange8">
+  </div>
+  <div class="col-md-5 my-2 mx-auto">
+    <label for="customRange2" class="form-label">min image rotation in
+      degree: {{configService.config.maxRotation}}</label>
+    <input type="range" class="form-range" [(ngModel)]="configService.config.maxRotation"
+           [ngModelOptions]="{standalone: true}" min="1" max="100" id="customRange4">
+  </div>
+  <div class="col-md-5 my-2 mx-auto">
+    <label for="customRange2" [style]="configService.getBackgroundRgba()" class="form-label">Card
+      background color:
+      hex: {{configService.getBackgroundRgba()}}</label>
+    <color-sketch [color]="configService.config.backgroundColor"
+                  (onChange)="handleChange($event)"></color-sketch>
+
+
+  </div>
+</div>
+<div id="result">
+  <div class="col-12 result-wrapper" id="result-wrapper">
+  </div>
+</div>
+
+

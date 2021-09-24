@@ -1,0 +1,4 @@
+<div class="dooble-card">
+  <img *ngFor="let image of card.images" class="image" [src]="image.image.data"
+       [style]="getStyle(image)">
+</div>

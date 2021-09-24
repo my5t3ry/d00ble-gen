@@ -1,0 +1,20 @@
+.image-wrapper {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  grid-gap: 5px;
+}
+
+.upload-btn {
+  display: none;
+}
+
+.image {
+  width: 100%;
+}
+
+#result {
+  opacity: 0;
+  overflow: hidden;
+  height: 0px;
+  width: 0px;
+}

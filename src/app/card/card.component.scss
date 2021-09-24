@@ -1,0 +1,24 @@
+.dooble-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 5px;
+  background-color: #fff;
+  border: 2px dotted #939393;
+  border-radius: 50%;
+  -moz-border-radius: 50%;
+  -webkit-border-radius: 50%;
+  overflow: hidden;
+}
+
+.dooble-card img {
+  margin:  auto;
+  position: relative;
+}
+
+
+.card-wrapper {
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
