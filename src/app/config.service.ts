@@ -16,22 +16,23 @@ export class ConfigService {
     nativeCardPadding: 120,
     backgroundColor: {r: 143, g: 247, b: 178, a: 0.54},
     cardScaling: 100,
+    allowNonUniqueImages: false,
     maxRotation: 360
   }
 
-
-  get config(): { backgroundColor: { a: number; r: number; b: number; g: number }; numCards: number; maxImageWidth: number; minImageWidth: number; cardScaling: number; maxRotation: number; nativeCardSize: number; nativeCardPadding: number; numImagesOnCard: number } {
+  get config(): { backgroundColor: { a: number; r: number; b: number; g: number }; allowNonUniqueImages: boolean; numCards: number; maxImageWidth: number; minImageWidth: number; cardScaling: number; maxRotation: number; nativeCardSize: number; nativeCardPadding: number; numImagesOnCard: number } {
     return this._config;
   }
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient
+  ) {
     this.http.get("assets/defaultimages.json").subscribe(result => {
       this.images = <{ data: string | ArrayBuffer | null; uuid: string }[]>result;
     })
   }
 
   addImage(image: { data: string | ArrayBuffer | null; uuid: string }) {
-    this._images.push(image)
+      this._images.push(image)
   }
 
   get images(): any {
@@ -51,5 +52,10 @@ export class ConfigService {
     width: ${Math.floor(this._config.nativeCardSize * (this._config.cardScaling / 100))}px;
     height: ${Math.floor(this._config.nativeCardSize * (this._config.cardScaling / 100))}px;
     padding: ${Math.floor(this._config.nativeCardPadding * (this._config.cardScaling / 100))}px;`
+  }
+
+  toogleBoolean(allowNonUniqueImages: any) {
+    // @ts-ignore
+    this._config[allowNonUniqueImages] = !this._config[allowNonUniqueImages];
   }
 }

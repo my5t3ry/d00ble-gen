@@ -16,7 +16,7 @@
     </button>
     <input #upload type="file" multiple="multiple" class="upload-btn"
            (change)="onFileChange($event)"/>
-    <button [disabled]="configService.images.length == 0" (click)="render()" type="button"
+    <button [disabled]="configService.images?.length == 0" (click)="render()" type="button"
             title="upload" class="btn btn-dark pull-left mx-1">
       generate
     </button>
@@ -103,6 +103,11 @@
       degree: {{configService.config.maxRotation}}</label>
     <input type="range" class="form-range" [(ngModel)]="configService.config.maxRotation"
            [ngModelOptions]="{standalone: true}" min="1" max="100" id="customRange4">
+  </div>
+  <div class="col-md-5 my-2 mx-auto">
+    <label for="customRange2" class="form-label">allow multiple image on card</label>
+    <input class="form-check-input mx-1" [checked]="configService.config.allowNonUniqueImages"
+           type="checkbox" value="" id="flexCheckIndeterminate" (change)="configService.toogleBoolean('allowNonUniqueImages')">
   </div>
   <div class="col-md-5 my-2 mx-auto">
     <label for="customRange2" [style]="configService.getBackgroundRgba()" class="form-label">Card

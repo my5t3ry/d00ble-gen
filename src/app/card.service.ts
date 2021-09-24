@@ -20,8 +20,15 @@ export class CardService {
       while (i < this._configService.config.numCards) {
         let images: { image: any; style: any }[] = []
         let ii = 0;
-        while (ii < this._configService.config.numImagesOnCard) {
-          images.push({image: this.getRandomImage(), style: this.getRandomStyle()});
+        while (images.length < this._configService.config.numImagesOnCard && ii < this.configService.images.length) {
+          let randomImage = this.getRandomImage();
+          if (this.configService.config.allowNonUniqueImages) {
+            images.push({image: randomImage, style: this.getRandomStyle()})
+          } else {
+            if (images.filter(value => value.image.uuid === randomImage.uuid).length == 0) {
+              images.push({image: randomImage, style: this.getRandomStyle()})
+            }
+          }
           ii++;
         }
 
@@ -33,7 +40,7 @@ export class CardService {
     })
   }
 
-  private getRandomImage() {
+  private getRandomImage(): { data: string | ArrayBuffer | null; uuid: string } {
     return this._configService.images[Math.floor(Math.random() * this._configService.images.length)];
   }
 

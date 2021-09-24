@@ -20,7 +20,6 @@ import html2canvas from "html2canvas";
   selector: 'app-config',
   templateUrl: './config.component.html',
   styleUrls: ['./config.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ConfigComponent {
   set rendering(value: boolean) {
@@ -59,6 +58,7 @@ export class ConfigComponent {
         reader.onload = () => {
           let image = {data: reader.result, uuid: uuid.v4()}
           this._configService.addImage(image)
+          console.log(JSON.stringify(this._configService.images))
         };
       }
     }
