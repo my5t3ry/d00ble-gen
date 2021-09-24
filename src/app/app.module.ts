@@ -8,8 +8,8 @@ import {CardComponent} from './card/card.component';
 import {ProgressbarModule} from "ngx-bootstrap/progressbar";
 import {CarouselModule} from "ngx-bootstrap/carousel";
 import {FormsModule} from "@angular/forms";
-import {ColorPickerModule} from "ngx-color-picker";
 import {ColorSketchModule} from "ngx-color/sketch";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import {ColorSketchModule} from "ngx-color/sketch";
     CardComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     ProgressbarModule,

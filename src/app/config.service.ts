@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConfigService {
-  private _images: { data: string | ArrayBuffer | null; uuid: string }[] = []
+  private _images:  { data: string | ArrayBuffer | null; uuid: string }[]=[]
   private _config = {
     numCards: 12,
     maxImageWidth: 100,
@@ -23,7 +24,10 @@ export class ConfigService {
     return this._config;
   }
 
-  constructor() {
+  constructor(private http: HttpClient) {
+    this.http.get("assets/defaultimages.json").subscribe(result => {
+      this.images = <{ data: string | ArrayBuffer | null; uuid: string }[]>result;
+    })
   }
 
   addImage(image: { data: string | ArrayBuffer | null; uuid: string }) {
