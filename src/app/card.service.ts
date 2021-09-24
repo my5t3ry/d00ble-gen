@@ -13,21 +13,22 @@ export class CardService {
   constructor(private _configService: ConfigService) {
   }
 
-  getCards(): { images: { image: any; style: any }[] }[] {
-    let result: { images: { image: any; style: any; }[]; }[] = []
-
-    let i = 0;
-    while (i < this._configService.config.numCards) {
-      let images: { image: any; style: any }[] = []
-      let ii = 0;
-      while (ii < this._configService.config.numImagesOnCard) {
-        images.push({image: this.getRandomImage(), style: this.getRandomStyle()});
-        ii++;
+  getCards(): Promise<{ images: { image: any; style: any; }[]; }[]> {
+    return new Promise<{ images: { image: any; style: any; }[]; }[]>(resolve => {
+      let result: { images: { image: any; style: any; }[]; }[] = []
+      let i = 0;
+      while (i < this._configService.config.numCards) {
+        let images: { image: any; style: any }[] = []
+        let ii = 0;
+        while (ii < this._configService.config.numImagesOnCard) {
+          images.push({image: this.getRandomImage(), style: this.getRandomStyle()});
+          ii++;
+        }
+        result.push({images: images})
+        i++;
       }
-      result.push({images: images})
-      i++;
-    }
-    return result;
+      resolve(result);
+    })
   }
 
   private getRandomImage() {
