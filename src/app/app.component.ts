@@ -8,6 +8,6 @@ import * as uuid from "uuid";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'd00bler-gen';
+  title = 'd00ble-gen';
 
 }
