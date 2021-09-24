@@ -24,9 +24,11 @@ export class CardService {
           images.push({image: this.getRandomImage(), style: this.getRandomStyle()});
           ii++;
         }
+
         result.push({images: images})
         i++;
       }
+
       resolve(result);
     })
   }

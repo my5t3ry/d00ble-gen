@@ -59,7 +59,6 @@ export class ConfigComponent {
         reader.onload = () => {
           let image = {data: reader.result, uuid: uuid.v4()}
           this._configService.addImage(image)
-          console.log(JSON.stringify(this._configService.images));
         };
       }
     }
@@ -80,6 +79,7 @@ export class ConfigComponent {
 
   createCardComponents(cards: { images: { image: any; style: any }[] }[]) {
     return new Promise<ComponentRef<CardComponent>[]>(resolve => {
+
       let result: ComponentRef<CardComponent>[] = [];
       cards.forEach(curCard => {
         const componentRef = this.componentFactoryResolver
@@ -115,10 +115,10 @@ export class ConfigComponent {
             let resultWrapper = document.getElementById("result-wrapper");
             compRefs.forEach(curRef => {
               if (resultWrapper) {
+
                 const domElem = (curRef.hostView as EmbeddedViewRef<any>)
                   .rootNodes[0] as HTMLElement;
                 resultWrapper.appendChild(domElem);
-                // @ts-ignore
                 let cardElement = domElem.getElementsByClassName("dooble-card").item(0);
                 if (cardElement) {
 
@@ -130,14 +130,17 @@ export class ConfigComponent {
 
                     const contentDataURL = canvas.toDataURL('image/png')
                     let curOffset = that.calcOffset(that._cardsRendered, canvas);
+                    pdf.addImage(contentDataURL, 'PNG', curOffset.x, curOffset.y, canvas.width, canvas.height)
+
                     that._cardsRendered++;
                     that.cd.detectChanges();
-                    pdf.addImage(contentDataURL, 'PNG', curOffset.x, curOffset.y, canvas.width, canvas.height)
-                    if (that._cardsRendered == that._cards.length) {
-                      // @ts-ignore
+
+                    if (that._cardsRendered == that._cards.length && resultWrapper) {
                       resultWrapper.innerHTML = '';
+
                       resolve(true);
                     }
+
                     if (that._cardsRendered % 6 == 0
                       && that._cardsRendered != that._cards.length) {
                       pdf.addPage(
@@ -145,6 +148,7 @@ export class ConfigComponent {
                         "portrait"
                       )
                     }
+
                   });
                 }
               }
@@ -159,7 +163,6 @@ export class ConfigComponent {
         that._cards = []
       })
     }, 200)
-
   }
 
   get cardService(): CardService {
