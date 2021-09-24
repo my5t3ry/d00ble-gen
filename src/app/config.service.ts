@@ -6,7 +6,7 @@ import {HttpClient} from "@angular/common/http";
   providedIn: 'root'
 })
 export class ConfigService {
-  private _images:  { data: string | ArrayBuffer | null; uuid: string }[]=[]
+  private _images: any = null;
   private _config = {
     numCards: 12,
     maxImageWidth: 100,
@@ -34,7 +34,7 @@ export class ConfigService {
     this._images.push(image)
   }
 
-  get images(): { data: string | ArrayBuffer | null; uuid: string }[] {
+  get images(): any {
     return this._images;
   }
 
