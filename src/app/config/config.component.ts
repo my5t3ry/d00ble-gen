@@ -168,7 +168,7 @@ export class ConfigComponent {
 
   private calcOffset(_cardsRendered: number, canvas: HTMLCanvasElement) {
     return {
-      y: (Math.floor(this._cardsRendered % 6 / 2) * canvas.height) + 30 + (30 * Math.floor(this._cardsRendered / 2)),
+      y: (Math.floor(this._cardsRendered % 6 / 2) * canvas.height) + 30 + (30 * Math.floor(this._cardsRendered % 6 / 2)),
       x: (Math.floor(this._cardsRendered % 6 % 2) * canvas.width) + 50 + (50 * Math.floor(this._cardsRendered % 2))
     }
   }

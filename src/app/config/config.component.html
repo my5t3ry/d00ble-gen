@@ -4,7 +4,7 @@
     <p class="lead fw-normal">select images to generate d00ble cards. use square png images with
       transparent background for best results.</p>
   </div>
-  <div class="col-md-5  mx-auto">
+  <div class="col-md-5  mx-auto" *ngIf="!rendering">
     <button (click)="upload.click()" type="button" title="upload"
             class="btn btn-dark pull-left mx-1">
       add images
